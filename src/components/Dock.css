@@ -1,0 +1,77 @@
+.dock-outer {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 100;
+  pointer-events: none; /* Let clicks pass through outside the panel */
+}
+
+.dock-panel {
+  pointer-events: auto; /* Enable clicks inside panel */
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  width: fit-content;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  padding: 0.5rem 0.75rem 0; /* padding at top to hold icons when scaling up */
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease;
+}
+
+.dock-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-hairline);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.15),
+    0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  outline: none;
+  color: var(--color-text-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.dock-item:hover, .dock-item:focus-visible {
+  border-color: var(--color-violet);
+  color: var(--color-violet);
+}
+
+.dock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dock-label {
+  position: absolute;
+  bottom: -2.25rem; /* Tooltip shows at the bottom since dock is at the top */
+  left: 50%;
+  width: fit-content;
+  white-space: pre;
+  border-radius: 9999px;
+  border: 1px solid var(--color-hairline);
+  background-color: var(--color-surface-raised);
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  transform: translateX(-50%);
+  box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+  pointer-events: none;
+}

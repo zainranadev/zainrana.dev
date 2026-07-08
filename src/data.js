@@ -1,12 +1,12 @@
 export const profile = {
-  name: "Zain.dev",
+  name: "Zainranadev",
   role: "MERN stack developer",
   pitch:
 "Every interface is a hundred small decisions pretending to be one simple one. I make the decisions.",
   location: "Lahore, Pakistan",
   resumeUrl: "/Zain_Ul_Abideen-Resume.pdf",
   email: "zainrana.dev@gmail.com",
-  github: "https://github.com/zain-io-dev",
+  github: "https://github.com/zainranadev",
   linkedin: "https://www.linkedin.com/in/zain-ul-abideen-0759472a9/",
   whatsapp: "https://wa.me/923251575822",
 };

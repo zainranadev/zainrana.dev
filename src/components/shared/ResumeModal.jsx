@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { profile } from "../data";
+import { profile } from "../../data";
 
 export default function ResumeModal({ onClose }) {
   // Close on Escape key

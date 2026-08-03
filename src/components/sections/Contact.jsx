@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { profile } from "../data";
-import DecryptedText from "./DecryptedText";
+import { profile } from "../../data";
+import DecryptedText from "../shared/DecryptedText";
 import Lanyard from "./Lanyard";
 
 const contacts = [

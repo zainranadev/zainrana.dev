@@ -7,8 +7,8 @@ import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphe
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 
 // Relative path to src/assets/lanyard/
-import cardGLB from '../assets/lanyard/card.glb';
-import lanyard from '../assets/lanyard/lanyard.png';
+import cardGLB from '../../assets/lanyard/card.glb';
+import lanyard from '../../assets/lanyard/lanyard.png';
 
 import * as THREE from 'three';
 import './Lanyard.css';

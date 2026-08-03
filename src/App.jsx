@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import Skills from "./components/Skills";
-import Projects from "./components/Projects";
-import About from "./components/About";
-import Comments from "./components/Comments";
-import Contact from "./components/Contact";
-import PixelBlast from "./components/PixelBlast";
-import CpuTransitionOverlay from "./components/CpuTransitionOverlay";
+import Nav from "./components/layout/Nav";
+import Hero from "./components/sections/Hero";
+import Skills from "./components/sections/Skills";
+import Projects from "./components/sections/Projects";
+import About from "./components/sections/About";
+import Contact from "./components/sections/Contact";
+import PixelBlast from "./components/shared/PixelBlast";
+import CpuTransitionOverlay from "./components/shared/CpuTransitionOverlay";
 
 export default function App() {
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -28,7 +27,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen font-body relative">
-      {/* Dynamic Interactive Volcanic Pixel Background */}
       <div className="fixed inset-0 pointer-events-auto z-[-1] opacity-35">
         <PixelBlast
           variant="square"
@@ -52,11 +50,9 @@ export default function App() {
         <Projects />
         <Skills />
         <About />
-        <Comments />
         <Contact />
       </main>
 
-      {/* Fullscreen CPU transition overlay */}
       <AnimatePresence>
         {isTransitioning && <CpuTransitionOverlay isVisible={isTransitioning} />}
       </AnimatePresence>

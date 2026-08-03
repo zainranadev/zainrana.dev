@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { CpuArchitecture } from "./ui/cpu-architecture";
+import { CpuArchitecture } from "./cpu-architecture";
 
 const terminalSteps = [
   { time: 100, text: "[SYSTEM] Booting portfolio cores..." },

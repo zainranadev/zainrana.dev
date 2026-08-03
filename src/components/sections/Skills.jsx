@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { skills } from "../data";
-import DecryptedText from "./DecryptedText";
+import { skills } from "../../data";
+import DecryptedText from "../shared/DecryptedText";
 
 // Per-group accent colors matching the warm palette
 const groupConfig = {

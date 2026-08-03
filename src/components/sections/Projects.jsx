@@ -1,9 +1,9 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { projects } from "../data";
-import ProjectCard from "./ProjectCard";
+import { projects } from "../../data";
+import ProjectCard from "../shared/ProjectCard";
 import { Search, SlidersHorizontal } from "lucide-react";
-import DecryptedText from "./DecryptedText";
+import DecryptedText from "../shared/DecryptedText";
 
 export default function Projects() {
   const [selectedTag, setSelectedTag] = useState("All");
@@ -35,7 +35,7 @@ export default function Projects() {
           <p className="font-mono text-xs uppercase tracking-widest text-live mb-3">
             <DecryptedText text="[ Work ]" animateOn="view" sequential={true} speed={80} />
           </p>
-          <h2 className="font-display text-4xl font-semibold mb-2">Selected Projects</h2>
+          <h2 className="font-display text-4xl font-semibold mb-2">Projects</h2>
           <p className="text-text-muted max-w-lg">
             A curated list of my work, including MERN stack applications, Python automation tools, and utility software.
           </p>

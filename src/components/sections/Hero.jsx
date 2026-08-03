@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { profile, stats } from "../data";
-import DecryptedText from "./DecryptedText";
+import { profile, stats } from "../../data";
+import DecryptedText from "../shared/DecryptedText";
 
 function CountUp({ target, suffix = "" }) {
   const [value, setValue] = useState(0);

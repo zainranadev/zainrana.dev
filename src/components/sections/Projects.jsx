@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "../../data";
 import ProjectCard from "../shared/ProjectCard";
 import { Search, SlidersHorizontal } from "lucide-react";
-import DecryptedText from "../shared/DecryptedText";
 
 export default function Projects() {
   const [selectedTag, setSelectedTag] = useState("All");
@@ -18,7 +17,12 @@ export default function Projects() {
   // Filter projects based on search query and selected tag
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
-      const matchesTag = selectedTag === "All" || project.tag === selectedTag;
+      const matchesTag =
+        selectedTag === "All"
+          ? true
+          : selectedTag === "Featured"
+          ? Boolean(project.featured)
+          : project.tag === selectedTag;
       const matchesSearch =
         project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,7 +37,7 @@ export default function Projects() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
           <p className="font-mono text-xs uppercase tracking-widest text-live mb-3">
-            <DecryptedText text="[ Work ]" animateOn="view" sequential={true} speed={80} />
+            [ Work ]
           </p>
           <h2 className="font-display text-4xl font-semibold mb-2">Projects</h2>
           <p className="text-text-muted max-w-lg">
@@ -68,6 +72,25 @@ export default function Projects() {
           <SlidersHorizontal className="w-3.5 h-3.5" />
           Filter:
         </div>
+        <button
+          onClick={() => setSelectedTag("Featured")}
+          className={`relative px-4 py-1.5 rounded-full font-mono text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
+            selectedTag === "Featured"
+              ? "bg-violet text-void font-semibold"
+              : "bg-surface-raised border border-hairline text-text-muted hover:text-text-primary hover:border-violet/40"
+          }`}
+        >
+          <span>★ Featured</span>
+          <span
+            className={`text-[9px] px-1.5 py-0.5 rounded-full ${
+              selectedTag === "Featured"
+                ? "bg-void/10 text-void"
+                : "bg-void text-text-muted border border-hairline"
+            }`}
+          >
+            {projects.filter((p) => p.featured).length}
+          </span>
+        </button>
         {tags.map((tag) => {
           const isActive = selectedTag === tag;
           const count = tag === "All"

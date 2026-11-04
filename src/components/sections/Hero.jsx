@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { profile, stats } from "../../data";
-import DecryptedText from "../shared/DecryptedText";
 
 function CountUp({ target, suffix = "" }) {
   const [value, setValue] = useState(0);
@@ -37,34 +36,15 @@ export default function Hero({ onViewWork }) {
       >
         <p className="font-mono text-xs uppercase tracking-widest text-live mb-5 flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-live animate-pulse" />
-          <DecryptedText text="Open to work" animateOn="view" sequential={true} speed={60} />
+          Open to work
         </p>
         <h1 className="font-display text-5xl sm:text-6xl font-semibold leading-[1.05] text-balance">
-          <DecryptedText
-            text={profile.name}
-            animateOn="hover"
-            useOriginalCharsOnly={true}
-            className="text-text-primary"
-          />
-          , building
+          <span className="text-text-primary">{profile.name}</span>, building
           <br />
-          <DecryptedText
-            text="real-time"
-            animateOn="hover"
-            speed={40}
-            className="text-violet"
-            encryptedClassName="text-live"
-          />{" "}
-          web platforms.
+          <span className="text-violet">real-time</span> web platforms.
         </h1>
         <p className="mt-6 text-text-muted text-lg max-w-md leading-relaxed">
-          <DecryptedText
-            text={profile.pitch}
-            animateOn="hover"
-            speed={25}
-            maxIterations={15}
-            className="text-text-muted"
-          />
+          {profile.pitch}
         </p>
         <div className="mt-9 flex flex-wrap items-center gap-4">
           <button

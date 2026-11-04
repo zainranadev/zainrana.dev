@@ -1,314 +1,188 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Code2, Heart, Share2, X, Copy, Check } from "lucide-react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
-// Tag → gradient color map for the banner
-const tagColors = {
-  "REAL-TIME · AI": "from-violet/30 via-violet/10 to-transparent",
-  "FULL-STACK":     "from-live/30 via-live/10 to-transparent",
-  "AUTOMATION":     "from-violet-deep/30 via-violet-deep/10 to-transparent",
-  "UTILITY":        "from-text-muted/20 via-text-muted/5 to-transparent",
-};
+const MAX_CHIPS = 4;
 
-// Tag → icon letter avatar
-const tagInitials = {
-  "REAL-TIME · AI": "AI",
-  "FULL-STACK":     "FS",
-  "AUTOMATION":     "AT",
-  "UTILITY":        "UT",
-};
-
-const tagAvatarColor = {
-  "REAL-TIME · AI": "bg-violet/15 text-violet border-violet/30",
-  "FULL-STACK":     "bg-live/15 text-live border-live/30",
-  "AUTOMATION":     "bg-violet-deep/15 text-violet-deep border-violet-deep/30",
-  "UTILITY":        "bg-text-muted/10 text-text-muted border-text-muted/20",
-};
-
-// ── Share Menu ───────────────────────────────────────
-function ShareMenu({ url, title, onClose }) {
-  const ref = useRef(null);
-  const [copied, setCopied] = useState(false);
-
-  // Close on outside click
-  useEffect(() => {
-    const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) onClose();
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, [onClose]);
-
-  const copyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => { setCopied(false); onClose(); }, 1500);
-    } catch {
-      window.open(url, "_blank");
-    }
-  };
-
-  const shareOptions = [
-    {
-      label: "Twitter / X",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 5.867zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-      ),
-      href: `https://twitter.com/intent/tweet?text=Check out ${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
-      color: "hover:text-sky-400 hover:bg-sky-400/10",
-    },
-    {
-      label: "LinkedIn",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-        </svg>
-      ),
-      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-      color: "hover:text-blue-400 hover:bg-blue-400/10",
-    },
-    {
-      label: "WhatsApp",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-        </svg>
-      ),
-      href: `https://wa.me/?text=${encodeURIComponent(`${title} — ${url}`)}`,
-      color: "hover:text-green-400 hover:bg-green-400/10",
-    },
-  ];
-
+function GithubIcon({ className }) {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.92, y: 8 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.92, y: 8 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
-      className="absolute bottom-10 right-0 z-50 w-52 rounded-xl border border-hairline bg-surface-raised shadow-2xl overflow-hidden"
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between px-3 py-2.5 border-b border-hairline">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-text-muted">Share project</span>
-        <button onClick={onClose} className="text-text-muted hover:text-text-primary transition-colors">
-          <X size={12} />
-        </button>
-      </div>
-
-      {/* Platform options */}
-      <div className="p-1.5 space-y-0.5">
-        {shareOptions.map((opt) => (
-          <a
-            key={opt.label}
-            href={opt.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={onClose}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted transition-colors text-sm font-medium ${opt.color}`}
-          >
-            {opt.icon}
-            {opt.label}
-          </a>
-        ))}
-
-        {/* Divider */}
-        <div className="h-px bg-hairline my-1.5" />
-
-        {/* Copy link */}
-        <button
-          onClick={copyLink}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:text-violet hover:bg-violet/10 transition-colors text-sm font-medium"
-        >
-          {copied ? <Check size={16} className="text-green-400" /> : <Copy size={16} />}
-          {copied ? "Copied!" : "Copy link"}
-        </button>
-      </div>
-    </motion.div>
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+    </svg>
   );
 }
 
-// ── Main Card ────────────────────────────────────────
-export default function ProjectCard({ project, index }) {
-  const { id, name, tag, year, description, highlights, stack, links, featured } = project;
+function getInitials(name = "") {
+  return name
+    .split(/[\s\-_]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
 
-  const likeKey  = `like_${id}`;
-  const countKey = `likes_${id}`;
+export default function ProjectCard({ project }) {
+  const { name, description, stack = [], tag, image } = project;
 
-  const [liked,     setLiked]     = useState(() => localStorage.getItem(likeKey) === "1");
-  const [count,     setCount]     = useState(() => parseInt(localStorage.getItem(countKey) || "0", 10));
-  const [burst,     setBurst]     = useState(false);
-  const [shareOpen, setShareOpen] = useState(false);
+  // Field names vary between portfolios, so accept the common ones (including project.links).
+  const rawGithub =
+    project.github ??
+    project.repo ??
+    project.githubUrl ??
+    project.code ??
+    project.links?.code ??
+    project.links?.github;
+  const rawLive =
+    project.live ??
+    project.demo ??
+    project.link ??
+    project.url ??
+    project.links?.demo ??
+    project.links?.live;
 
-  // Persist likes
-  useEffect(() => {
-    localStorage.setItem(likeKey, liked ? "1" : "0");
-    localStorage.setItem(countKey, String(count));
-  }, [liked, count]);
+  const github = rawGithub && rawGithub !== "#" ? rawGithub : null;
+  const live = rawLive && rawLive !== "#" ? rawLive : null;
 
-  const handleLike = () => {
-    if (!liked) {
-      setCount((c) => c + 1);
-      setBurst(true);
-      setTimeout(() => setBurst(false), 600);
-    } else {
-      setCount((c) => Math.max(0, c - 1));
-    }
-    setLiked((v) => !v);
+  const visibleStack = stack.slice(0, MAX_CHIPS);
+  const hiddenStack = stack.slice(MAX_CHIPS);
+
+  // Pointer position drives the spotlight and the edge glow.
+  const mx = useMotionValue(-400);
+  const my = useMotionValue(-400);
+
+  const edge = useMotionTemplate`radial-gradient(260px circle at ${mx}px ${my}px, currentColor, transparent 70%)`;
+  const wash = useMotionTemplate`radial-gradient(340px circle at ${mx}px ${my}px, color-mix(in srgb, currentColor 12%, transparent), transparent 70%)`;
+
+  const handleMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mx.set(e.clientX - rect.left);
+    my.set(e.clientY - rect.top);
   };
-
-  // Native share on mobile, dropdown on desktop
-  const handleShareClick = async () => {
-    const url = links.demo !== "#" ? links.demo : links.code;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: name, url });
-      } catch { /* user cancelled */ }
-    } else {
-      setShareOpen((v) => !v);
-    }
-  };
-
-  const gradient = tagColors[tag]      || "from-violet/30 via-violet/10 to-transparent";
-  const avatar   = tagAvatarColor[tag] || "bg-violet/15 text-violet border-violet/30";
-  const initials = tagInitials[tag]    || name.slice(0, 2).toUpperCase();
-  const shareUrl = links.demo !== "#" ? links.demo : links.code;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      className={`group flex flex-col rounded-2xl border border-hairline bg-surface overflow-hidden hover:border-violet/50 transition-colors duration-300 ${
-        featured ? "md:col-span-2" : ""
-      }`}
+    <article
+      onMouseMove={handleMove}
+      className="group relative h-full rounded-2xl bg-hairline p-px"
     >
-      {/* ── Card Header ───────────────────────────────── */}
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-hairline">
-        <div className={`shrink-0 w-10 h-10 rounded-full border flex items-center justify-center font-mono text-xs font-bold ${avatar}`}>
-          {initials}
+      {/* Edge glow that follows the pointer */}
+      <motion.div
+        aria-hidden
+        style={{ background: edge }}
+        className="pointer-events-none absolute inset-0 rounded-2xl text-violet opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      />
+
+      <div className="relative flex h-full flex-col overflow-hidden rounded-[15px] bg-surface">
+        {/* Soft spotlight over the whole card surface */}
+        <motion.div
+          aria-hidden
+          style={{ background: wash }}
+          className="pointer-events-none absolute inset-0 z-10 text-violet opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        />
+
+        {/* Cover */}
+        <div className="relative h-36 overflow-hidden border-b border-hairline bg-void">
+          {image ? (
+            <img
+              src={image}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
+            />
+          ) : (
+            <>
+              <div
+                aria-hidden
+                className="absolute inset-0 text-text-muted opacity-20"
+                style={{
+                  backgroundImage: "radial-gradient(currentColor 1px, transparent 1px)",
+                  backgroundSize: "18px 18px",
+                }}
+              />
+              <span
+                aria-hidden
+                className="absolute -bottom-3 left-4 select-none font-display text-8xl font-semibold leading-none text-text-primary opacity-[0.07] transition-all duration-500 group-hover:text-violet group-hover:opacity-20"
+              >
+                {getInitials(name)}
+              </span>
+            </>
+          )}
+
+          {tag && (
+            <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-hairline bg-void/80 px-2.5 py-1 font-mono text-[11px] text-text-muted backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-violet" />
+              {tag}
+            </span>
+          )}
+
+          {project.featured && (
+            <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full border border-violet/40 bg-violet/15 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-violet backdrop-blur">
+              ★ Featured
+            </span>
+          )}
         </div>
-        <div className="min-w-0">
-          <h3 className="font-display font-semibold text-base text-text-primary group-hover:text-violet transition-colors leading-tight truncate">
+
+        {/* Body */}
+        <div className="flex flex-1 flex-col gap-3 p-5">
+          <h3 className="font-display text-xl font-semibold leading-snug text-text-primary">
             {name}
           </h3>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-text-muted">{tag}</p>
-        </div>
-        <span className="ml-auto font-mono text-[10px] text-text-muted whitespace-nowrap">{year}</span>
-      </div>
 
-      {/* ── Banner ─────────────────────────────────────── */}
-      <div className={`relative h-36 bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden`}>
-        <div className="absolute inset-0 opacity-[0.06] bg-[repeating-linear-gradient(90deg,white_0px,white_1px,transparent_1px,transparent_28px),repeating-linear-gradient(0deg,white_0px,white_1px,transparent_1px,transparent_28px)]" />
-        <div className="relative flex flex-wrap justify-center gap-2 px-6">
-          {stack.slice(0, featured ? 8 : 4).map((t) => (
-            <span
-              key={t}
-              className="font-mono text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-void/60 border border-hairline text-text-muted backdrop-blur-sm"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      </div>
+          <p className="line-clamp-3 text-sm leading-relaxed text-text-muted">
+            {description}
+          </p>
 
-      {/* ── Description ─────────────────────────────────── */}
-      <div className="px-5 py-4 flex-1">
-        <p className="text-text-muted text-sm leading-relaxed mb-3">{description}</p>
-        {featured && (
-          <ul className="space-y-1.5">
-            {highlights.map((h) => (
-              <li key={h} className="flex gap-2 text-xs text-text-primary/80 leading-relaxed">
-                <span className="mt-1.5 w-1 h-1 rounded-full bg-live shrink-0" />
-                {h}
-              </li>
-            ))}
-          </ul>
+          {stack.length > 0 && (
+            <ul className="mt-auto flex flex-wrap gap-1.5 pt-2" aria-label="Tech stack">
+              {visibleStack.map((tech) => (
+                <li
+                  key={tech}
+                  className="rounded-md border border-hairline bg-surface-raised px-2 py-0.5 font-mono text-[11px] text-text-muted"
+                >
+                  {tech}
+                </li>
+              ))}
+              {hiddenStack.length > 0 && (
+                <li
+                  title={hiddenStack.join(", ")}
+                  className="rounded-md border border-dashed border-hairline px-2 py-0.5 font-mono text-[11px] text-text-muted"
+                >
+                  +{hiddenStack.length}
+                </li>
+              )}
+            </ul>
+          )}
+        </div>
+
+        {/* Links */}
+        {(github || live) && (
+          <div className="relative flex items-center gap-4 border-t border-hairline px-5 py-3 text-sm">
+            {github && (
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${name} source code on GitHub`}
+                className="inline-flex items-center gap-1.5 rounded text-text-muted transition-colors hover:text-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
+              >
+                <GithubIcon className="h-4 w-4" />
+                Source
+              </a>
+            )}
+            {live && (
+              <a
+                href={live}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${name} live`}
+                className="ml-auto inline-flex items-center gap-1 rounded font-medium text-violet transition-colors hover:text-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
+              >
+                View live
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+            )}
+          </div>
         )}
       </div>
-
-      {/* ── Footer ──────────────────────────────────────── */}
-      <div className="flex items-center justify-between px-5 py-3 border-t border-hairline">
-        {/* Action buttons */}
-        <div className="flex items-center gap-1">
-          {links.demo && links.demo !== "#" ? (
-            <a
-              href={links.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 font-mono text-[11px] uppercase tracking-widest text-violet hover:text-violet/80 transition-colors px-2 py-1 rounded-lg hover:bg-violet/10"
-            >
-              Live Demo <ArrowUpRight size={12} />
-            </a>
-          ) : (
-            <span className="font-mono text-[11px] uppercase tracking-widest text-text-muted/40 px-2 py-1 cursor-default select-none">
-              No Demo
-            </span>
-          )}
-          {links.code && (
-            <a
-              href={links.code}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 font-mono text-[11px] uppercase tracking-widest text-text-muted hover:text-violet transition-colors px-2 py-1 rounded-lg hover:bg-violet/10"
-            >
-              <Code2 size={12} /> Code
-            </a>
-          )}
-        </div>
-
-        {/* Like + Share */}
-        <div className="flex items-center gap-2">
-          {/* Share */}
-          <div className="relative">
-            <button
-              onClick={handleShareClick}
-              title="Share project"
-              className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${
-                shareOpen
-                  ? "text-violet bg-violet/15 border border-violet/30"
-                  : "text-text-muted hover:text-violet hover:bg-violet/10"
-              }`}
-            >
-              <Share2 size={15} />
-            </button>
-
-            <AnimatePresence>
-              {shareOpen && (
-                <ShareMenu
-                  url={shareUrl}
-                  title={name}
-                  onClose={() => setShareOpen(false)}
-                />
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Like */}
-          <button
-            onClick={handleLike}
-            title={liked ? "Unlike" : "Like this project"}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-200 ${
-              liked
-                ? "text-red-400 bg-red-500/10 border border-red-500/30"
-                : "text-text-muted hover:text-red-400 hover:bg-red-500/10 border border-transparent"
-            }`}
-          >
-            <motion.span
-              animate={burst ? { scale: [1, 1.5, 0.9, 1.1, 1] } : {}}
-              transition={{ duration: 0.4 }}
-              className="flex items-center"
-            >
-              <Heart size={14} className={liked ? "fill-red-400" : ""} />
-            </motion.span>
-            <span className="font-mono text-[11px] min-w-[1ch]">{count}</span>
-          </button>
-        </div>
-      </div>
-    </motion.article>
+    </article>
   );
 }

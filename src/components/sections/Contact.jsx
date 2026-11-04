@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { profile } from "../../data";
-import DecryptedText from "../shared/DecryptedText";
 import Lanyard from "./Lanyard";
 
 const contacts = [
@@ -342,7 +341,7 @@ export default function Contact() {
     <section id="contact" className="max-w-6xl mx-auto px-6 py-24">
       {/* Header */}
       <p className="font-mono text-xs uppercase tracking-widest text-live mb-3">
-        <DecryptedText text="[ Contact ]" animateOn="view" sequential={true} speed={80} />
+        [ Contact ]
       </p>
       <h2 className="font-display text-3xl font-semibold mb-2">Get in touch</h2>
       <p className="text-text-muted mb-12 max-w-lg">

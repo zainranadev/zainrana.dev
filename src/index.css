@@ -10,36 +10,43 @@
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Bind custom colors to dynamic CSS properties */
-  --color-void: var(--void);
-  --color-surface: var(--surface);
-  --color-surface-raised: var(--surface-raised);
-  --color-hairline: var(--hairline);
-  --color-violet: var(--violet);
-  --color-violet-deep: var(--violet-deep);
-  --color-live: var(--live);
-  --color-text-primary: var(--text-primary);
-  --color-text-muted: var(--text-muted);
+  /* ── Deep Forest Design Tokens → Tailwind classes ── */
+  --color-void:          var(--void);           /* bg-void          */
+  --color-surface:       var(--surface);        /* bg-surface        */
+  --color-surface-raised: var(--surface-raised);/* bg-surface-raised */
+  --color-hairline:      var(--hairline);       /* border-hairline   */
+  --color-violet:        var(--violet);         /* text-violet / bg-violet (primary accent = forest green) */
+  --color-violet-deep:   var(--violet-deep);    /* secondary accent  */
+  --color-live:          var(--live);           /* text-live (highlight yellow) */
+  --color-text-primary:  var(--text-primary);   /* text-text-primary */
+  --color-text-muted:    var(--text-muted);     /* text-text-muted   */
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   DARK MODE — DEEP FOREST (default)
+   ═══════════════════════════════════════════════════════════════════ */
 :root {
-  /* ── Dark Volcanic Palette (Default) ── */
-  --void: #0A0705;          /* Base background */
-  --surface: #17110D;       /* Card/surface background (char) */
-  --surface-raised: #211914; /* Slightly raised surface */
-  --hairline: #33271E;      /* Borders / separators */
+  /* Backgrounds */
+  --void:          #0E1511;   /* forest at dusk — base background   */
+  --surface:       #16211A;   /* dark pine — cards, nav pill         */
+  --surface-raised: #1C2B22;  /* slightly raised surface            */
+  --hairline:      #2A3A2F;   /* wet bark — borders / separators    */
 
-  --violet: #FF4B1F;        /* Primary accent (ember) */
-  --violet-deep: #B8180A;   /* Secondary accent (blood) */
-  --live: #FF9A4D;          /* Highlight / active (amber) */
+  /* Accents */
+  --violet:        #8FBF6A;   /* new leaves — primary accent (green)*/
+  --violet-deep:   #5A8A45;   /* deeper green — secondary accent    */
+  --live:          #E8B84A;   /* sunlight through canopy — highlight*/
 
-  --text-primary: #FFF3EC;  /* Body text (smoke) */
-  --text-muted: #A69184;    /* Muted warm off-white */
+  /* Text */
+  --text-primary:  #EEF2E6;   /* pale lichen — body text            */
+  --text-muted:    #A3B0A0;   /* sage — muted text                  */
 
-  /* Glow / grid variables */
-  --glow-1: rgba(255, 75, 31, 0.08);
-  --glow-2: rgba(184, 24, 10, 0.04);
+  /* Glow / grid */
+  --glow-1: rgba(143, 191, 106, 0.08);
+  --glow-2: rgba(90, 138, 69, 0.04);
   --grid-line: rgba(255, 255, 255, 0.010);
+
+  /* ── shadcn / Radix base tokens (kept for component library) ── */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -74,25 +81,30 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* ── Light Warm Volcanic Palette ── */
+/* ═══════════════════════════════════════════════════════════════════
+   LIGHT MODE — DEEP FOREST LIGHT
+   ═══════════════════════════════════════════════════════════════════ */
 html.light {
-  --void: #FFF3EC;          /* Light warm cream base */
-  --surface: #FCF6F2;       /* Warm white card surface */
-  --surface-raised: #F4E8E0; /* Slightly darker cream */
-  --hairline: #E2D0C4;      /* Soft warm separator */
+  --void:          #F3F5EC;   /* pale meadow — base background      */
+  --surface:       #FBFCF6;   /* warm white card surface            */
+  --surface-raised: #EEF2E5;  /* slightly darker cream              */
+  --hairline:      #D9E0CC;   /* soft green separator               */
 
-  --violet: #E83204;        /* Darker red/ember for better contrast */
-  --violet-deep: #B8180A;   /* blood */
-  --live: #D96A14;          /* Darker amber/orange for readability */
+  --violet:        #3F6B2A;   /* dark forest green — higher contrast*/
+  --violet-deep:   #2E5020;   /* deeper forest green                */
+  --live:          #B7791F;   /* amber — highlight on light         */
 
-  --text-primary: #17110D;  /* Dark charcoal body text (char) */
-  --text-muted: #7A6253;    /* Muted warm brown */
+  --text-primary:  #14200F;   /* deep forest text                   */
+  --text-muted:    #4F5E49;   /* muted forest text                  */
 
-  /* Glow / grid variables */
-  --glow-1: rgba(255, 75, 31, 0.04);
-  --glow-2: rgba(232, 127, 36, 0.03);
-  --grid-line: rgba(23, 17, 13, 0.015);
+  --glow-1: rgba(63, 107, 42, 0.04);
+  --glow-2: rgba(90, 138, 69, 0.03);
+  --grid-line: rgba(14, 32, 15, 0.015);
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   GLOBAL BASE STYLES
+   ═══════════════════════════════════════════════════════════════════ */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -118,20 +130,36 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Text selection — accent green tint */
 ::selection {
-  background-color: var(--color-violet);
-  color: var(--color-void);
+  background-color: rgba(143, 191, 106, 0.30);
+  color: var(--color-text-primary);
 }
 
+html.light ::selection {
+  background-color: rgba(63, 107, 42, 0.20);
+  color: var(--color-text-primary);
+}
+
+/* Focus ring — accent green for keyboard users */
 *:focus-visible {
-  outline: 2px solid var(--color-live);
+  outline: 2px solid var(--color-violet);
   outline-offset: 3px;
 }
+
+/* Scrollbar — themed */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-void); }
+::-webkit-scrollbar-thumb { background: var(--color-hairline); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-violet); }
 
 .text-balance {
   text-wrap: balance;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   SHADCN / TAILWIND INLINE THEME TOKENS
+   ═══════════════════════════════════════════════════════════════════ */
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: 'Geist Variable', sans-serif;
@@ -221,7 +249,9 @@ body {
   }
 }
 
-/* CPU Architecture Component Animations */
+/* ═══════════════════════════════════════════════════════════════════
+   CPU Architecture Component Animations
+   ═══════════════════════════════════════════════════════════════════ */
 .cpu-architecture {
   offset-anchor: 10px 0px;
   animation: animation-path;

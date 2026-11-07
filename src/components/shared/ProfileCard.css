@@ -12,7 +12,7 @@
   --grain: none;
   --icon: none;
   --behind-gradient: none;
-  --behind-glow-color: rgba(255, 75, 31, 0.45);
+  --behind-glow-color: rgba(143, 191, 106, 0.30);
   --behind-glow-size: 25%;
   --inner-gradient: none;
   --sunpillar-1: hsl(2, 100%, 73%);
@@ -377,7 +377,7 @@
   margin: 0;
   font-size: min(5svh, 3em);
   margin: 0;
-  background-image: linear-gradient(to bottom, #fff, var(--color-live, #FF9A4D));
+  background-image: linear-gradient(to bottom, #fff, var(--color-live, #E8B84A));
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -392,7 +392,7 @@
   font-size: 16px;
   margin: 0 auto;
   width: min-content;
-  background-image: linear-gradient(to bottom, #fff, var(--color-violet, #FF4B1F));
+  background-image: linear-gradient(to bottom, #fff, var(--color-violet, #8FBF6A));
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
   background-clip: text;

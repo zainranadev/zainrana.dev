@@ -94,14 +94,14 @@ function generateTexturesForContact(c) {
 
   // Deep dark obsidian background with custom brand glow at bottom
   const grad = ctx.createLinearGradient(0, 0, 0, height);
-  grad.addColorStop(0, "#17110D");
-  grad.addColorStop(0.8, "#0A0705");
+  grad.addColorStop(0, "#16211A");
+  grad.addColorStop(0.8, "#0E1511");
   grad.addColorStop(1, c.brandColor + "28"); // 15% opacity brand glow
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, width, height);
 
   // Outer border lines
-  ctx.strokeStyle = "#33271E";
+  ctx.strokeStyle = "#2A3A2F";
   ctx.lineWidth = 14;
   ctx.strokeRect(7, 7, width - 14, height - 14);
 
@@ -111,22 +111,22 @@ function generateTexturesForContact(c) {
   ctx.strokeRect(20, 20, width - 40, height - 40);
 
   // Lanyard clip slot at top center
-  ctx.fillStyle = "#0A0705";
+  ctx.fillStyle = "#0E1511";
   ctx.beginPath();
   ctx.roundRect(width / 2 - 40, 30, 80, 20, 10);
   ctx.fill();
-  ctx.strokeStyle = "#33271E";
+  ctx.strokeStyle = "#2A3A2F";
   ctx.lineWidth = 3;
   ctx.stroke();
 
   // Draw ZR Monogram
-  ctx.fillStyle = "#FFF3EC";
+  ctx.fillStyle = "#EEF2E6";
   ctx.font = 'bold 22px "Space Grotesk", sans-serif';
   ctx.textAlign = "left";
   ctx.fillText("ZR", 40, 75);
 
   // Draw node badge label
-  ctx.fillStyle = "#A69184";
+  ctx.fillStyle = "#A3B0A0";
   ctx.font = '11px "JetBrains Mono", monospace';
   ctx.textAlign = "right";
   ctx.fillText("SECURE NODE", width - 40, 72);
@@ -134,7 +134,7 @@ function generateTexturesForContact(c) {
   // Draw 3D icon box backing (glowing)
   ctx.shadowColor = c.brandColor;
   ctx.shadowBlur = 18;
-  ctx.fillStyle = "#17110D";
+  ctx.fillStyle = "#16211A";
   ctx.beginPath();
   ctx.roundRect(width / 2 - 80, 160, 160, 160, 24);
   ctx.fill();
@@ -153,18 +153,18 @@ function generateTexturesForContact(c) {
   ctx.restore();
 
   // Label text (Gmail, WhatsApp, etc.)
-  ctx.fillStyle = "#FFF3EC";
+  ctx.fillStyle = "#EEF2E6";
   ctx.font = 'bold 38px "Space Grotesk", sans-serif';
   ctx.textAlign = "center";
   ctx.fillText(c.label.toUpperCase(), width / 2, 380);
 
   // Subtitle
-  ctx.fillStyle = "#A69184";
+  ctx.fillStyle = "#A3B0A0";
   ctx.font = '14px "JetBrains Mono", monospace';
   ctx.fillText("CONTACT CREDENTIAL", width / 2, 420);
 
   // Separator
-  ctx.strokeStyle = "#33271E";
+  ctx.strokeStyle = "#2A3A2F";
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(80, 460);
@@ -172,7 +172,7 @@ function generateTexturesForContact(c) {
   ctx.stroke();
 
   // Status
-  ctx.fillStyle = "#FF9A4D"; // live highlight color
+  ctx.fillStyle = "#E8B84A"; // Deep Forest highlight (sunlight through canopy)
   ctx.font = 'bold 12px "JetBrains Mono", monospace';
   ctx.fillText("• STATUS: ACTIVE •", width / 2, 500);
 
@@ -182,7 +182,7 @@ function generateTexturesForContact(c) {
   const barcodeHeight = 60;
   const barcodeY = 560;
 
-  ctx.fillStyle = "#A69184";
+  ctx.fillStyle = "#A3B0A0";
   let curX = barcodeX;
   while (curX < barcodeX + barcodeWidth) {
     const w = Math.floor(Math.random() * 4) + 1;
@@ -194,7 +194,7 @@ function generateTexturesForContact(c) {
   ctx.fillText(`* ${c.id.toUpperCase()}-${cleanVal} *`, width / 2, barcodeY + barcodeHeight + 20);
 
   // Footer
-  ctx.fillStyle = "#33271E";
+  ctx.fillStyle = "#2A3A2F";
   ctx.font = '9px "JetBrains Mono", monospace';
   ctx.fillText("ZR SYSTEM v1.0.0 © 2026", width / 2, height - 35);
 
@@ -207,22 +207,22 @@ function generateTexturesForContact(c) {
 
   // Background
   const bGrad = bCtx.createLinearGradient(0, 0, 0, height);
-  bGrad.addColorStop(0, "#0A0705");
-  bGrad.addColorStop(1, "#17110D");
+  bGrad.addColorStop(0, "#0E1511");
+  bGrad.addColorStop(1, "#16211A");
   bCtx.fillStyle = bGrad;
   bCtx.fillRect(0, 0, width, height);
 
   // Outer border
-  bCtx.strokeStyle = "#33271E";
+  bCtx.strokeStyle = "#2A3A2F";
   bCtx.lineWidth = 14;
   bCtx.strokeRect(7, 7, width - 14, height - 14);
 
   // Clip hole
-  bCtx.fillStyle = "#0A0705";
+  bCtx.fillStyle = "#0E1511";
   bCtx.beginPath();
   bCtx.roundRect(width / 2 - 40, 30, 80, 20, 10);
   bCtx.fill();
-  bCtx.strokeStyle = "#33271E";
+  bCtx.strokeStyle = "#2A3A2F";
   bCtx.lineWidth = 3;
   bCtx.stroke();
 
@@ -235,20 +235,20 @@ function generateTexturesForContact(c) {
   bCtx.strokeRect(qx - 10, qy - 10, qrSize + 20, qrSize + 20);
 
   // Draw simulated QR Code
-  bCtx.fillStyle = "#FFF3EC";
+  bCtx.fillStyle = "#EEF2E6";
   const drawCorner = (cx, cy) => {
-    bCtx.fillStyle = "#FFF3EC";
+    bCtx.fillStyle = "#EEF2E6";
     bCtx.fillRect(cx, cy, 40, 40);
-    bCtx.fillStyle = "#17110D";
+    bCtx.fillStyle = "#16211A";
     bCtx.fillRect(cx + 8, cy + 8, 24, 24);
-    bCtx.fillStyle = "#FFF3EC";
+    bCtx.fillStyle = "#EEF2E6";
     bCtx.fillRect(cx + 12, cy + 12, 16, 16);
   };
   drawCorner(qx, qy);
   drawCorner(qx + qrSize - 40, qy);
   drawCorner(qx, qy + qrSize - 40);
 
-  bCtx.fillStyle = "#FFF3EC";
+  bCtx.fillStyle = "#EEF2E6";
   const cellSize = 8;
   let seed = c.id.charCodeAt(0) + c.id.charCodeAt(1);
   const random = () => {
@@ -280,26 +280,26 @@ function generateTexturesForContact(c) {
     fontSize -= 1;
     bCtx.font = `bold ${fontSize}px "Space Grotesk", sans-serif`;
   }
-  bCtx.fillStyle = "#FFF3EC";
+  bCtx.fillStyle = "#EEF2E6";
   bCtx.fillText(c.value, width / 2, qy + qrSize + 95);
 
-  bCtx.fillStyle = "#A69184";
+  bCtx.fillStyle = "#A3B0A0";
   bCtx.font = '13px "JetBrains Mono", monospace';
   bCtx.fillText(`[ ${c.hint.toUpperCase()} ]`, width / 2, qy + qrSize + 130);
 
   // Sign Line
-  bCtx.strokeStyle = "#33271E";
+  bCtx.strokeStyle = "#2A3A2F";
   bCtx.lineWidth = 1;
   bCtx.beginPath();
   bCtx.moveTo(100, height - 150);
   bCtx.lineTo(width - 100, height - 150);
   bCtx.stroke();
 
-  bCtx.fillStyle = "#A69184";
+  bCtx.fillStyle = "#A3B0A0";
   bCtx.font = 'italic 12px "Space Grotesk", sans-serif';
   bCtx.fillText("Authorized Signature", width / 2, height - 130);
 
-  bCtx.fillStyle = "#FFF3EC";
+  bCtx.fillStyle = "#EEF2E6";
   bCtx.font = 'bold 16px "Space Grotesk", sans-serif';
   bCtx.fillText("ZR DEV STUDIO", width / 2, height - 80);
 
@@ -313,7 +313,7 @@ function generateTexturesForContact(c) {
   sCtx.fillStyle = c.brandColor;
   sCtx.fillRect(0, 0, 512, 64);
 
-  sCtx.fillStyle = "#FFF3EC";
+  sCtx.fillStyle = "#EEF2E6";
   sCtx.font = 'bold 16px "JetBrains Mono", monospace';
   sCtx.textAlign = "center";
   sCtx.textBaseline = "middle";

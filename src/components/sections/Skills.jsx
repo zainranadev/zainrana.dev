@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { skills } from "../../data";
 
@@ -6,10 +6,10 @@ import { skills } from "../../data";
 /* Config                                                              */
 /* ------------------------------------------------------------------ */
 
-// Per-group accent colors matching the warm palette
+// Per-group accent colors matching the Deep Forest palette
 const groupConfig = {
   Frontend: {
-    color: "#FF4B1F", // Ember
+    color: "#8FBF6A", // new leaves � primary accent green
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
@@ -17,7 +17,7 @@ const groupConfig = {
     ),
   },
   Backend: {
-    color: "#FF9A4D", // Amber
+    color: "#E8B84A", // sunlight through canopy � highlight yellow
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" />
@@ -34,7 +34,7 @@ const groupConfig = {
   },
 };
 
-const FALLBACK_COLORS = ["#FF4B1F", "#FF9A4D", "#73A5CA", "#A78BFA"];
+const FALLBACK_COLORS = ["#8FBF6A", "#E8B84A", "#73A5CA", "#A3B0A0"];
 
 // Spiral geometry (radii are fractions of the container's half-size)
 const R_START = 0.4;

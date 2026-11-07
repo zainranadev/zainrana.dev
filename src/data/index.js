@@ -264,7 +264,7 @@ export const projects = [
     ],
     stack: ["JavaScript", "HTML", "CSS"],
     links: {
-      demo: "https://multitask-calculator.vercel.app/",
+      demo: "https://multitask-calculator-omega.vercel.app/",
       code: "https://github.com/zainranadev/-multitask-calculator",
     },
   },

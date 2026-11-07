@@ -31,7 +31,7 @@ export default function App() {
         <PixelBlast
           variant="square"
           pixelSize={4}
-          color="#FF4B1F" /* Ember color matching the theme */
+          color="#8FBF6A" /* Forest green matching the Deep Forest theme */
           patternScale={2}
           patternDensity={0.8}
           enableRipples={true}

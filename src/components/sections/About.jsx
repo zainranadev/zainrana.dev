@@ -47,8 +47,8 @@ export default function About() {
             enableTilt={true}
             enableMobileTilt={false}
             behindGlowEnabled={true}
-            behindGlowColor="rgba(255, 75, 31, 0.45)"
-            innerGradient="linear-gradient(145deg, rgba(23, 17, 13, 0.95) 0%, rgba(255, 75, 31, 0.08) 100%)"
+            behindGlowColor="rgba(143, 191, 106, 0.30)"
+            innerGradient="linear-gradient(145deg, rgba(22, 33, 26, 0.95) 0%, rgba(143, 191, 106, 0.08) 100%)"
             onContactClick={() => {
               document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
             }}

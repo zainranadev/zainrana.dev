@@ -69,7 +69,7 @@ export default function CpuTransitionOverlay({ isVisible }) {
         </div>
 
         {/* CPU Architecture SVG */}
-        <div className="w-full max-w-[360px] md:max-w-[420px] aspect-[2/1] text-violet mb-8 drop-shadow-[0_0_15px_rgba(255,75,31,0.15)]">
+        <div className="w-full max-w-[360px] md:max-w-[420px] aspect-[2/1] text-violet mb-8 drop-shadow-[0_0_15px_rgba(143,191,106,0.20)]">
           <CpuArchitecture
             text={cpuText}
             animateText={true}
